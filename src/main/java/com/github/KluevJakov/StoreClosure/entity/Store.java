@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 @Getter
@@ -14,6 +15,7 @@ public class Store {
     private Long id;
     private String phone;
     private String name;
+    @ManyToOne
     private Address address;
 
 }
