@@ -4,6 +4,7 @@ import com.github.KluevJakov.StoreClosure.entity.Store;
 import com.github.KluevJakov.StoreClosure.repository.StoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,4 +29,8 @@ public class StoreController {
         return null;
     }
 
+    @PostMapping(value = "/openStore")
+    public void openStore() {
+
+    }
 }
