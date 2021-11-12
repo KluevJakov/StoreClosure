@@ -26,7 +26,7 @@ public class StoreController {
         if (storeRepository.findById(id).isPresent()) {
             return storeRepository.findById(id).get();
         }
-        return null;
+        throw new NullPointerException();
     }
 
     @PostMapping(value = "/openStore")

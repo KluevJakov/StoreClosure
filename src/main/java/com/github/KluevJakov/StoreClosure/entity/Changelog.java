@@ -17,6 +17,7 @@ public class Changelog {
     private Date changeDate;
     private String changedBy;
     private String reason;
+    private closureTypeEnum closureType;
 
-    private enum closureType {CUSTOM, WEATHER, EMERGENCY, OPEN}
+    public enum closureTypeEnum {CUSTOM, WEATHER, EMERGENCY, OPEN}
 }

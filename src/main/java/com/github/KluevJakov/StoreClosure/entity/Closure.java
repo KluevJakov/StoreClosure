@@ -2,9 +2,9 @@ package com.github.KluevJakov.StoreClosure.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -12,12 +12,16 @@ import java.util.Date;
 @Setter
 public class Closure {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private Long storeId;
     private String text;
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date startDate;
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date endDate;
+    private closureTypeEnum closureType;
 
-    private enum closureType {CUSTOM, WEATHER, EMERGENCY}
+    public enum closureTypeEnum {CUSTOM, WEATHER, EMERGENCY}
 
 }
