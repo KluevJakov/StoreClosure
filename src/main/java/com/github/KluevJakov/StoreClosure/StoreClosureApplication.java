@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 @EntityScan("com.github.KluevJakov.StoreClosure.entity")
 @EnableJpaRepositories("com.github.KluevJakov.StoreClosure.repository")
-@ComponentScan({"com.github.KluevJakov.StoreClosure.controller"})
+@ComponentScan({"com.github.KluevJakov.StoreClosure.controller", "com.github.KluevJakov.StoreClosure.configuration"})
 public class StoreClosureApplication {
 
 	public static void main(String[] args) {
