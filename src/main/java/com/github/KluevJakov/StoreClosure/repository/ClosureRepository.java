@@ -10,4 +10,5 @@ import javax.transaction.Transactional;
 public interface ClosureRepository extends JpaRepository<Closure, Long> {
     @Transactional
     void deleteAllByStoreId(Long storeId);
+    boolean existsByStoreId(Long storeId);
 }
