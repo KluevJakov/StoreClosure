@@ -1,6 +1,7 @@
 package com.github.KluevJakov.StoreClosure.controller;
 
 import com.github.KluevJakov.StoreClosure.entity.Store;
+import com.github.KluevJakov.StoreClosure.repository.ClosureRepository;
 import com.github.KluevJakov.StoreClosure.repository.StoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,8 @@ public class StoreController {
 
     @Autowired
     private StoreRepository storeRepository;
+    @Autowired
+    private ClosureRepository closureRepository;
 
     @GetMapping(value = "/getStores")
     public List<Store> getStores() {
@@ -30,7 +33,7 @@ public class StoreController {
     }
 
     @PostMapping(value = "/openStore")
-    public void openStore() {
-
+    public void openStore(@RequestParam(value = "storeId") Long storeId) {
+        closureRepository.deleteAllByStoreId(storeId);
     }
 }

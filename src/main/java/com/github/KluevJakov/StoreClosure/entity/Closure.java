@@ -1,5 +1,6 @@
 package com.github.KluevJakov.StoreClosure.entity;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
