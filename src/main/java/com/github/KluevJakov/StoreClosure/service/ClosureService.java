@@ -26,9 +26,11 @@ public class ClosureService {
     public boolean createClosureIfPossible(Long storeId, String text, Date startDate, Date endDate, String closureType) {
         if (storeRepository.existsById(storeId) && startDate.before(endDate)) {
             for (Closure closure : closureRepository.findAll()) {
-                if (closure.getStoreId().equals(storeId) && (!startDate.after(closure.getEndDate())) || (!endDate.before(closure.getStartDate()))) {
-                    log.warn("Closure: date intersection for (storeId = " + storeId + ")");
-                    return false;
+                if (closure.getStoreId().equals(storeId)) {
+                    if ((!startDate.after(closure.getEndDate())) || (!endDate.before(closure.getStartDate()))) {
+                        log.warn("Closure: date intersection for (storeId = " + storeId + ")");
+                        return false;
+                    }
                 }
             }
 
