@@ -34,22 +34,16 @@ public class ClosureService {
                 }
             }
 
-            Closure closure = new Closure();
-            closure.setStoreId(storeId);
-            closure.setStartDate(startDate);
-            closure.setEndDate(endDate);
-            closure.setClosureType(Closure.closureTypeEnum.valueOf(closureType));
+            Closure closure = new Closure(storeId, startDate, endDate, Closure.closureTypeEnum.valueOf(closureType));
             if (Closure.closureTypeEnum.valueOf(closureType) == Closure.closureTypeEnum.CUSTOM) {
                 closure.setText(text);
             }
+            log.info("Closure: " + storeId + " " + startDate + " " + endDate + " " + Closure.closureTypeEnum.valueOf(closureType));
+
             closureRepository.save(closure);
             log.info("Closure: closure (storeId = " + storeId + ") created successfully");
 
-            Changelog changelog = new Changelog();
-            changelog.setChangeDate(new Date());
-            changelog.setStoreId(storeId);
-            changelog.setReason(Changelog.closureTypeEnum.valueOf(closureType));
-            //changelog.setChangedBy("");
+            Changelog changelog = new Changelog(storeId, new Date(), "stub", Changelog.closureTypeEnum.valueOf(closureType));
             changelogRepository.save(changelog);
             log.info("Closure: changelog (storeId = " + storeId + ") recorded successfully");
             return true;

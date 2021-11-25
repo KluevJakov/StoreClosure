@@ -1,6 +1,5 @@
 package com.github.KluevJakov.StoreClosure.entity;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -25,4 +24,10 @@ public class Closure {
 
     public enum closureTypeEnum {CUSTOM, WEATHER, EMERGENCY}
 
+    public Closure(Long storeId, Date startDate, Date endDate, closureTypeEnum closureType) {
+        this.storeId = storeId;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.closureType = closureType;
+    }
 }

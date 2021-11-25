@@ -27,11 +27,8 @@ public class StoreService {
         if (closureRepository.existsByStoreId(storeId)) {
             closureRepository.deleteAllByStoreId(storeId);
             log.info("Store: all Closures were deleted for storeId = " + storeId);
-            Changelog changelog = new Changelog();
-            changelog.setChangeDate(new Date());
-            changelog.setStoreId(storeId);
-            changelog.setReason(Changelog.closureTypeEnum.OPEN);
-            //changelog.setChangedBy("");
+
+            Changelog changelog = new Changelog(storeId, new Date(), "stub", Changelog.closureTypeEnum.OPEN);
             changelogRepository.save(changelog);
             log.info("Store: store (id = " + storeId + ") open successfully. Changelog was recorded");
             return true;

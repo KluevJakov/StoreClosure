@@ -22,4 +22,11 @@ public class Changelog {
     private closureTypeEnum reason;
 
     public enum closureTypeEnum {CUSTOM, WEATHER, EMERGENCY, OPEN}
+
+    public Changelog(Long storeId, Date changeDate, String changedBy, closureTypeEnum reason) {
+        this.storeId = storeId;
+        this.changeDate = changeDate;
+        this.changedBy = changedBy;
+        this.reason = reason;
+    }
 }
