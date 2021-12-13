@@ -12,7 +12,7 @@ import java.util.Date;
 @Setter
 public class Closure {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long storeId;
     private String text;
@@ -20,9 +20,13 @@ public class Closure {
     private Date startDate;
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date endDate;
+    @Enumerated(EnumType.ORDINAL)
     private closureTypeEnum closureType;
 
     public enum closureTypeEnum {CUSTOM, WEATHER, EMERGENCY}
+
+    public Closure() {
+    }
 
     public Closure(Long storeId, Date startDate, Date endDate, closureTypeEnum closureType) {
         this.storeId = storeId;

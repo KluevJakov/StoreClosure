@@ -1,3 +1,5 @@
+INSERT INTO CLOSURETYPEENUM(closureType) VALUES(0),(1),(2),(3);
+
 INSERT INTO address(id, city, street, house) VALUES(1, 'Moscow', 'Vavilova', '23');
 INSERT INTO address(id, city, street, house) VALUES(2, 'Moscow', 'Arbat', '142A');
 INSERT INTO address(id, city, street, house) VALUES(3, 'Moscow', 'Komsomolskaya', '452/1');

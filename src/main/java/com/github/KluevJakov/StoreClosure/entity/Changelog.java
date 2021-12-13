@@ -3,10 +3,7 @@ package com.github.KluevJakov.StoreClosure.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -14,14 +11,18 @@ import java.util.Date;
 @Setter
 public class Changelog {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long storeId;
     private Date changeDate;
     private String changedBy;
+    @Enumerated(EnumType.ORDINAL)
     private closureTypeEnum reason;
 
     public enum closureTypeEnum {CUSTOM, WEATHER, EMERGENCY, OPEN}
+
+    public Changelog() {
+    }
 
     public Changelog(Long storeId, Date changeDate, String changedBy, closureTypeEnum reason) {
         this.storeId = storeId;
