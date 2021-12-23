@@ -38,12 +38,12 @@ public class StoreService {
     }
 
     public List<Store> findAll() {
-        log.info("Store: try to find all Stores");
+        log.info("Store: finding all Stores");
         return storeRepository.findAll();
     }
 
     public Optional<Store> findById(Long id) {
-        log.info("Store: try to find Store by id = " + id);
+        log.info("Store: find Store by id = " + id);
         return storeRepository.findById(id);
     }
 }

@@ -53,10 +53,7 @@ public class ClosureService {
     }
 
     public List<Closure> findAllByStoreId(Long storeId) {
-        log.info("Closure: try to find all Closures by storeId = " + storeId);
-        return closureRepository.findAll()
-                .stream()
-                .filter(closure -> closure.getStoreId().equals(storeId))
-                .collect(Collectors.toList());
+        log.info("Closure: finding all Changelogs by storeId = " + storeId);
+        return closureRepository.findAllByStoreId(storeId);
     }
 }

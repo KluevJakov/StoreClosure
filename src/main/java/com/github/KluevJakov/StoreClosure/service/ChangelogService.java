@@ -16,15 +16,12 @@ public class ChangelogService {
     private ChangelogRepository changelogRepository;
 
     public List<Changelog> findAll() {
-        log.info("Changelog: try to find all Changelogs");
+        log.info("Changelog: finding all Changelogs");
         return changelogRepository.findAll();
     }
 
     public List<Changelog> findAllByStoreId(Long storeId) {
-        log.info("Changelog: try to find all Changelogs by storeId = " + storeId);
-        return changelogRepository.findAll()
-                .stream()
-                .filter(changelog -> changelog.getStoreId().equals(storeId))
-                .collect(Collectors.toList());
+        log.info("Changelog: finding all Changelogs by storeId = " + storeId);
+        return changelogRepository.findAllByStoreId(storeId);
     }
 }
