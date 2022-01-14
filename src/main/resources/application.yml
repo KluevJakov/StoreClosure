@@ -1,0 +1,31 @@
+spring:
+  datasource:
+    url: jdbc:h2:~/storedb
+    driverClassName: org.h2.Driver
+    username: root
+    password: root
+    database-platform: org.hibernate.dialect.H2Dialect
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+  h2:
+    console:
+      enabled: true
+      path: /console/
+
+  main:
+    banner-mode: off
+
+  flyway:
+    enabled: true
+    schemas: PUBLIC
+    validateOnMigrate: false
+
+logging:
+  level:
+    root: INFO
