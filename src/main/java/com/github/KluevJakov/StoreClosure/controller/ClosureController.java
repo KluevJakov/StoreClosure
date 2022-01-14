@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @RestController
@@ -18,8 +18,8 @@ public class ClosureController {
     private ClosureService closureService;
 
     @PostMapping(value = "/createClosure")
-    public void createClosure(@RequestParam(value = "storeId") Long storeId, @RequestParam(value = "text") String text, @RequestParam(value = "startDate") @DateTimeFormat(pattern = "dd-MM-yyyy") Date startDate, @RequestParam(value = "endDate") @DateTimeFormat(pattern = "dd-MM-yyyy") Date endDate, @RequestParam(value = "closureType") String closureType) {
-        if (closureService.createClosureIfPossible(storeId, text, startDate, endDate, closureType)) {
+    public void createClosure(@RequestParam(value = "storeId") Long storeId, @RequestParam(value = "text") String text, @RequestParam(value = "startDate") @DateTimeFormat(pattern = "dd-MM-yyyy") ZonedDateTime startDate, @RequestParam(value = "endDate") @DateTimeFormat(pattern = "dd-MM-yyyy") ZonedDateTime endDate, @RequestParam(value = "closureType") String closureType) {
+        if (closureService.createClosure(storeId, text, startDate, endDate, closureType)) {
             return;
         }
         throw new IllegalArgumentException();

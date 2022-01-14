@@ -14,8 +14,9 @@ import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Transactional
@@ -34,9 +35,14 @@ public class ClosureServiceTests {
 
     @BeforeEach
     void setUp() {
+        ZonedDateTime zoneDateTime1 = ZonedDateTime.of(2020, 1, 1, 0, 0, 0, 0, ZoneId.of("Europe/Paris"));
+        ZonedDateTime zoneDateTime2 = ZonedDateTime.of(2020, 2, 1, 0, 0, 0, 0, ZoneId.of("Europe/Paris"));
+        ZonedDateTime zoneDateTime3 = ZonedDateTime.of(2021, 1, 1, 0, 0, 0, 0, ZoneId.of("Europe/Paris"));
+        ZonedDateTime zoneDateTime4 = ZonedDateTime.of(2021, 2, 1, 0, 0, 0, 0, ZoneId.of("Europe/Paris"));
+
         clList = new ArrayList<>();
-        clList.add(new Closure(1L, new Date(2020, 1, 1), new Date(2020, 2, 1), Closure.closureTypeEnum.EMERGENCY));
-        clList.add(new Closure(1L, new Date(2021, 1, 1), new Date(2021, 2, 1), Closure.closureTypeEnum.WEATHER));
+        clList.add(new Closure(1L, zoneDateTime1, zoneDateTime2, Closure.closureTypeEnum.EMERGENCY));
+        clList.add(new Closure(1L, zoneDateTime3, zoneDateTime4, Closure.closureTypeEnum.WEATHER));
         closureRepository.saveAll(clList);
     }
 
@@ -49,33 +55,41 @@ public class ClosureServiceTests {
 
     @Test
     public void createClosureIfPossibleCorrect() {
-        Mockito.when(closureService.createClosureIfPossible(1L, "testText", new Date(2000, 1, 1), new Date(2000, 1, 2), Closure.closureTypeEnum.WEATHER.toString())).thenReturn(true);
-        Boolean check = closureService.createClosureIfPossible(1L, "testText", new Date(2000, 1, 1), new Date(2000, 1, 2), Closure.closureTypeEnum.WEATHER.toString());
+        ZonedDateTime zoneDateTime1 = ZonedDateTime.of(2000, 1, 1, 0, 0, 0, 0, ZoneId.of("Europe/Paris"));
+        ZonedDateTime zoneDateTime2 = ZonedDateTime.of(2000, 1, 2, 0, 0, 0, 0, ZoneId.of("Europe/Paris"));
+        Mockito.when(closureService.createClosure(1L, "testText", zoneDateTime1, zoneDateTime2, Closure.closureTypeEnum.WEATHER.toString())).thenReturn(true);
+        Boolean check = closureService.createClosure(1L, "testText", zoneDateTime1, zoneDateTime2, Closure.closureTypeEnum.WEATHER.toString());
         Assert.assertTrue(check);
     }
 
     @Test
     public void createClosureIfPossibleIntersection() {
-        Mockito.when(closureService.createClosureIfPossible(1L, "testText", new Date(2000, 1, 1), new Date(2000, 1, 2), Closure.closureTypeEnum.WEATHER.toString())).thenReturn(true);
-        Mockito.when(closureService.createClosureIfPossible(1L, "testText", new Date(2000, 1, 1), new Date(2001, 1, 2), Closure.closureTypeEnum.EMERGENCY.toString())).thenReturn(true);
+        ZonedDateTime zoneDateTime1 = ZonedDateTime.of(2000, 1, 1, 0, 0, 0, 0, ZoneId.of("Europe/Paris"));
+        ZonedDateTime zoneDateTime2 = ZonedDateTime.of(2000, 1, 2, 0, 0, 0, 0, ZoneId.of("Europe/Paris"));
+
+        Mockito.when(closureService.createClosure(1L, "testText", zoneDateTime1, zoneDateTime2, Closure.closureTypeEnum.WEATHER.toString())).thenReturn(true);
+        Mockito.when(closureService.createClosure(1L, "testText", zoneDateTime1, zoneDateTime2, Closure.closureTypeEnum.EMERGENCY.toString())).thenReturn(true);
 
         List<Closure> closureList = new ArrayList<>();
-        closureList.add(new Closure(1L, new Date(2021, 1, 1), new Date(2021, 1, 2), Closure.closureTypeEnum.WEATHER));
+        closureList.add(new Closure(1L, zoneDateTime1, zoneDateTime2, Closure.closureTypeEnum.WEATHER));
         Mockito.when(closureService.findAllByStoreId(1L)).thenReturn(closureList);
 
-        Boolean check = closureService.createClosureIfPossible(1L, "testText", new Date(2000, 1, 1), new Date(2000, 1, 2), Closure.closureTypeEnum.EMERGENCY.toString());
+        Boolean check = closureService.createClosure(1L, "testText", zoneDateTime1, zoneDateTime2, Closure.closureTypeEnum.EMERGENCY.toString());
         Assert.assertFalse(check);
     }
 
     @Test
     public void createClosureIfPossibleStoreIdDoesNotExists() {
-        Mockito.when(closureService.createClosureIfPossible(9999L, "testText", new Date(2000, 1, 1), new Date(2000, 1, 2), Closure.closureTypeEnum.WEATHER.toString())).thenReturn(true);
+        ZonedDateTime zoneDateTime1 = ZonedDateTime.of(2000, 1, 1, 0, 0, 0, 0, ZoneId.of("Europe/Paris"));
+        ZonedDateTime zoneDateTime2 = ZonedDateTime.of(2000, 1, 2, 0, 0, 0, 0, ZoneId.of("Europe/Paris"));
+
+        Mockito.when(closureService.createClosure(9999L, "testText", zoneDateTime1, zoneDateTime2, Closure.closureTypeEnum.WEATHER.toString())).thenReturn(true);
 
         List<Closure> closureList = new ArrayList<>();
-        closureList.add(new Closure(9999L, new Date(2021, 1, 1), new Date(2021, 1, 2), Closure.closureTypeEnum.WEATHER));
+        closureList.add(new Closure(9999L, zoneDateTime1, zoneDateTime2, Closure.closureTypeEnum.WEATHER));
         Mockito.when(closureService.findAllByStoreId(9999L)).thenReturn(closureList);
 
-        Boolean check = closureService.createClosureIfPossible(9999L, "testText", new Date(2000, 1, 1), new Date(2000, 1, 2), Closure.closureTypeEnum.WEATHER.toString());
+        Boolean check = closureService.createClosure(9999L, "testText", zoneDateTime1, zoneDateTime2, Closure.closureTypeEnum.WEATHER.toString());
         Assert.assertFalse(check);
     }
 }

@@ -5,7 +5,7 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 @Entity
 @Getter
@@ -17,9 +17,9 @@ public class Closure {
     private Long storeId;
     private String text;
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private Date startDate;
+    private ZonedDateTime startDate;
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private Date endDate;
+    private ZonedDateTime endDate;
     @Enumerated(EnumType.ORDINAL)
     private closureTypeEnum closureType;
 
@@ -28,7 +28,7 @@ public class Closure {
     public Closure() {
     }
 
-    public Closure(Long storeId, Date startDate, Date endDate, closureTypeEnum closureType) {
+    public Closure(Long storeId, ZonedDateTime startDate, ZonedDateTime endDate, closureTypeEnum closureType) {
         this.storeId = storeId;
         this.startDate = startDate;
         this.endDate = endDate;

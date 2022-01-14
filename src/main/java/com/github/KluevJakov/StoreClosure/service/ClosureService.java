@@ -9,9 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -23,11 +22,11 @@ public class ClosureService {
     @Autowired
     private ChangelogRepository changelogRepository;
 
-    public boolean createClosureIfPossible(Long storeId, String text, Date startDate, Date endDate, String closureType) {
-        if (storeRepository.existsById(storeId) && startDate.before(endDate)) {
+    public boolean createClosure(Long storeId, String text, ZonedDateTime startDate, ZonedDateTime endDate, String closureType) {
+        if (storeRepository.existsById(storeId) && startDate.isBefore(endDate)) {
             for (Closure closure : closureRepository.findAll()) {
                 if (closure.getStoreId().equals(storeId)) {
-                    if ((!startDate.after(closure.getEndDate())) || (!endDate.before(closure.getStartDate()))) {
+                    if ((!startDate.isAfter(closure.getEndDate())) || (!endDate.isBefore(closure.getStartDate()))) {
                         log.warn("Closure: date intersection for (storeId = " + storeId + ")");
                         return false;
                     }
@@ -43,7 +42,7 @@ public class ClosureService {
             closureRepository.save(closure);
             log.info("Closure: closure (storeId = " + storeId + ") created successfully");
 
-            Changelog changelog = new Changelog(storeId, new Date(), "stub", Changelog.closureTypeEnum.valueOf(closureType));
+            Changelog changelog = new Changelog(storeId, ZonedDateTime.now(), "stub", Changelog.closureTypeEnum.valueOf(closureType));
             changelogRepository.save(changelog);
             log.info("Closure: changelog (storeId = " + storeId + ") recorded successfully");
             return true;

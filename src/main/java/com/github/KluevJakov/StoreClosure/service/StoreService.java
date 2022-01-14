@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +28,7 @@ public class StoreService {
             closureRepository.deleteAllByStoreId(storeId);
             log.info("Store: all Closures were deleted for storeId = " + storeId);
 
-            Changelog changelog = new Changelog(storeId, new Date(), "stub", Changelog.closureTypeEnum.OPEN);
+            Changelog changelog = new Changelog(storeId, ZonedDateTime.now(), "stub", Changelog.closureTypeEnum.OPEN);
             changelogRepository.save(changelog);
             log.info("Store: store (id = " + storeId + ") open successfully. Changelog was recorded");
             return true;
